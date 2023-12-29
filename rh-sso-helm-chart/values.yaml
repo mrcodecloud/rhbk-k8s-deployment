@@ -1,0 +1,17 @@
+rhsso:
+  image:
+    repository: registry.redhat.io/rhbk/keycloak-rhel9
+    tag: 22-6
+    # repository: registry.redhat.io/rh-sso-7/sso76-openshift-rhel8
+    # tag: 7.6-38
+  keycloak:
+    realm: it22realm
+    adminUser: admin
+    adminPassword: admin
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "250m"
+    limits:
+      memory: "1Gi"
+      cpu: "500m"

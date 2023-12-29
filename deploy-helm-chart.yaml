@@ -1,0 +1,9 @@
+---
+- name: Deploy RHBK Helm Chart
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: Install Helm Chart
+      command: helm install rhbk ./rh-sso-helm-chart -n rhsso
+
