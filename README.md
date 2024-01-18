@@ -9,7 +9,7 @@ Use Ansible playbook to kick off HELM chart for deployment of RHSSO and do rest 
 Is this something we can test?
 
 
-We need to deploy and configure RHSSO Build 22+ on plain K8
+We need to deploy and configure RHSSO Build 22+ on  plain K8
 Completely automated
 Thry prefer kicking off a playbook which kicks off a helmchart and then rest ansible roles for config
 Let me know and show me the possibilities for RHSSO
@@ -45,6 +45,14 @@ Can't use ansible collection for
 	    --namespace=rhsso \
 	    -p '{"imagePullSecrets": [{"name": "rh-registry-secret"}]}'
 	
+	kubectl create secret docker-registry docker-registry-secret \
+  	  --docker-username=raydockhub \
+  	  --docker-password=786@docker.com \
+  	  --namespace=keycloak
+
+	kubectl patch serviceaccount default \
+	    --namespace=keycloak \
+	    -p '{"imagePullSecrets": [{"name": "docker-registry-secret"}]}'
 
 KeyCloak Configuration on a local k8s cluster
 
@@ -128,3 +136,15 @@ https://infotechys.com/install-minikube-on-rhel9-or-centos9/
 
 # Dec 30 
 
+https://access.redhat.com/documentation/en-us/red_hat_build_of_keycloak/22.0/html-single/server_guide/index#all-provider-config-single-file-2
+https://access.redhat.com/documentation/en-us/red_hat_build_of_keycloak/22.0/html-single/server_guide/index#containers-provide-initial-admin-credentials-when-running-in-a-container 
+
+#readinessProbe:
+        #   failureThreshold: 3
+        #   httpGet:
+        #     path: /realms/master
+        #     port: 8080
+        #     scheme: HTTP
+        #   periodSeconds: 10
+        #   successThreshold: 1
+        #   timeoutSeconds: 120

@@ -2,16 +2,32 @@ rhsso:
   image:
     repository: registry.redhat.io/rhbk/keycloak-rhel9
     tag: 22-6
-    # repository: registry.redhat.io/rh-sso-7/sso76-openshift-rhel8
-    # tag: 7.6-38
-  keycloak:
-    realm: it22realm
-    adminUser: admin
-    adminPassword: admin
-  resources:
-    requests:
-      memory: "512Mi"
-      cpu: "250m"
-    limits:
-      memory: "1Gi"
-      cpu: "500m"
+
+  envs:
+    admin:
+      user: kcadmin
+      password: cW5ID3ul5e
+
+    db: 
+      type: postgres
+      url: postgresql.svc.local
+      username: keycloak
+      password: 64y7vYt7vh
+      hostname: localhost
+
+    # spi-import-single-file-file: ./realm-to-import.json
+    # spi-import-single-file-realm-name: realm-name-other-than-master
+    # spi-import-single-file-strategy: OVERWRITE_EXISTING #IGNORE_EXISTING OR OVERWRITE_EXISTING
+
+
+# values.yaml
+postgresql:
+  enabled: true  # Set to false to disable PostgreSQL deployment
+  image:
+    repository: postgres
+    tag: latest
+  database:
+    name: keycloak
+  user:
+    name: keycloak
+    password: 64y7vYt7vh

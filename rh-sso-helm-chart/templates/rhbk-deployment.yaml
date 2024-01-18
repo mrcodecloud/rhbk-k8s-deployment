@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: rh-sso
+          # args: ["start-dev", "import-realm"]
+          args: ["start-dev"]
+          image: "{{ .Values.rhsso.image.repository }}:{{ .Values.rhsso.image.tag }}"
+          env:
+            - name: KEYCLOAK_ADMIN
+              value: "{{ .Values.rhsso.envs.admin.user }}"
+            - name: KEYCLOAK_ADMIN_PASSWORD
+              value: "{{ .Values.rhsso.envs.admin.password }}"
+
+            - name: KC_DB
+              value: "{{ .Values.rhsso.envs.db.type }}"
+            - name: KC_DB_URL
+              value: "{{ .Values.rhsso.envs.db.url }}"
+            - name: KC_DB_USERNAME
+              value: "{{ .Values.rhsso.envs.db.username }}"
+            - name: KC_DB_PASSWORD
+              value: "{{ .Values.rhsso.envs.db.password }}"
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /realms/master
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            timeoutSeconds: 120  # Increase this value
+          

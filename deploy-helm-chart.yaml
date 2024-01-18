@@ -5,5 +5,5 @@
 
   tasks:
     - name: Install Helm Chart
-      command: helm install rhbk ./rh-sso-helm-chart -n rhsso
+      command: helm install rhbk ./rh-sso-helm-chart -n kc
 
