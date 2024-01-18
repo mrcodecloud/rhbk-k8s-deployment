@@ -10,10 +10,10 @@ rhsso:
 
     db: 
       type: postgres
-      url: pgsql
+      url: jdbc:postgresql://pgsql/keycloak
       username: keycloak
       password: 64y7vYt7vh
-      hostname: localhost
+      # hostname: localhost
 
     # spi-import-single-file-file: ./realm-to-import.json
     # spi-import-single-file-realm-name: realm-name-other-than-master
