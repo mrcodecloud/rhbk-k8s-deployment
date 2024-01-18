@@ -25,12 +25,14 @@ spec:
           value: "{{ .Values.pgsql.user.name }}"
         - name: POSTGRES_PASSWORD
           value: "{{ .Values.pgsql.user.password }}"
+        - name: PGDATA
+          value: "{{ .Values.pgsql.database.data }}"
         ports:
         - containerPort: 5432
         securityContext:
           allowPrivilegeEscalation: false
           runAsNonRoot: true
-          runAsUser: 1001
+          runAsUser: 70
           capabilities:
             drop:
             - ALL

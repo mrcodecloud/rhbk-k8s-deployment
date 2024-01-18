@@ -10,7 +10,7 @@ rhsso:
 
     db: 
       type: postgres
-      url: pgsql.svc.local
+      url: pgsql
       username: keycloak
       password: 64y7vYt7vh
       hostname: localhost
@@ -28,6 +28,7 @@ pgsql:
     tag: latest
   database:
     name: keycloak
+    data: /var/lib/postgresql/data/pgdata
   user:
     name: keycloak
     password: 64y7vYt7vh
