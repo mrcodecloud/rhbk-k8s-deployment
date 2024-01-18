@@ -10,7 +10,7 @@ rhsso:
 
     db: 
       type: postgres
-      url: postgresql.svc.local
+      url: pgsql.svc.local
       username: keycloak
       password: 64y7vYt7vh
       hostname: localhost
@@ -21,8 +21,8 @@ rhsso:
 
 
 # values.yaml
-postgresql:
-  enabled: true  # Set to false to disable PostgreSQL deployment
+pgsql:
+  enabled: true  # Set to false to disable pgsql deployment
   image:
     repository: postgres
     tag: latest

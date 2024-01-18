@@ -1,41 +1,49 @@
-{{- if .Values.postgresql.enabled }}
+{{- if .Values.pgsql.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: postgresql
+  name: pgsql
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: postgresql
+      app: pgsql
   template:
     metadata:
       labels:
-        app: postgresql
+        app: pgsql
     spec:
       containers:
-      - name: postgresql
-        image: "{{ .Values.postgresql.image.repository }}:{{ .Values.postgresql.image.tag }}"
+      - name: pgsql
+        image: "{{ .Values.pgsql.image.repository }}:{{ .Values.pgsql.image.tag }}"
         imagePullSecrets:
           - name: docker-registry-secret
         env:
         - name: POSTGRES_DB
-          value: "{{ .Values.postgresql.database.name }}"
+          value: "{{ .Values.pgsql.database.name }}"
         - name: POSTGRES_USER
-          value: "{{ .Values.postgresql.user.name }}"
+          value: "{{ .Values.pgsql.user.name }}"
         - name: POSTGRES_PASSWORD
-          value: "{{ .Values.postgresql.user.password }}"
+          value: "{{ .Values.pgsql.user.password }}"
         ports:
         - containerPort: 5432
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsNonRoot: true
+          capabilities:
+            drop:
+            - ALL
+          seccompProfile:
+            type: RuntimeDefault
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: postgresql
+  name: pgsql
 spec:
   selector:
-    app: postgresql
+    app: pgsql
   ports:
   - protocol: TCP
     port: 5432

@@ -33,10 +33,19 @@ spec:
               value: "{{ .Values.rhsso.envs.db.password }}"
           ports:
             - containerPort: 8080
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            capabilities:
+              drop:
+              - ALL
+            seccompProfile:
+              type: RuntimeDefault
           readinessProbe:
             httpGet:
               path: /realms/master
               port: 8080
+              host: localhost
             initialDelaySeconds: 30
             periodSeconds: 5
             timeoutSeconds: 120  # Increase this value
