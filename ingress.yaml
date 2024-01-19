@@ -1,0 +1,56 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: rhbk-whitelist
+  namespace: keycloak
+spec:
+  ipWhiteList:
+    sourceRange:  
+    - 40.113.125.116/32
+    - 144.178.80.50/32
+    - 144.178.80.54/32
+    - 62.45.206.57/32
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: rhbk-ingress-http
+  namespace: keycloak
+  labels:
+    app: rhbk
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`rhbk.play-backend.vdbinfra.nl`)
+      kind: Rule
+      services:
+        - name: rhbk
+          kind: Service
+          port: 80
+      middlewares:
+        - name: traefik-https-redirect@kubernetescrd
+        - name: rhbk-whitelist
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: rhbk-ingress-https
+  namespace: keycloak
+  labels:
+    app: rhbk
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`rhbk.play-backend.vdbinfra.nl`)
+      kind: Rule
+      services:
+        - name: rhbk
+          kind: Service
+          port: 80
+      middlewares:
+        - name: rhbk-whitelist
+  tls:
+    secretName: le-prod-wildcard-cert
