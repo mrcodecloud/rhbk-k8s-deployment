@@ -21,7 +21,7 @@ spec:
   entryPoints:
     - web
   routes:
-    - match: Host(`rhbk.{{ .Values.rhsso.cluster-name }}-backend.vdbinfra.nl`)
+    - match: Host("rhbk.{{ .Values.rhsso.clustername }}-backend.vdbinfra.nl")
       kind: Rule
       services:
         - name: rhbk
@@ -41,7 +41,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`rhbk.{{ .Values.rhsso.cluster-name }}-backend.vdbinfra.nl`)
+    - match: Host("rhbk.{{ .Values.rhsso.clustername }}-backend.vdbinfra.nl")
       kind: Rule
       services:
         - name: rhbk
