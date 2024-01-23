@@ -4,7 +4,6 @@ metadata:
   labels:
     app.kubernetes.io/name: rhbk
   name: rhbk
-  namespace: keycloak
 spec:
   internalTrafficPolicy: Cluster
   ports:
