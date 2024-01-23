@@ -12,5 +12,5 @@ spec:
     protocol: TCP
     targetPort: 8080
   selector:
-    app.kubernetes.io/name: rhbk
+    app: rhbk
   type: ClusterIP

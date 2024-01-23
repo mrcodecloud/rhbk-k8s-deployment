@@ -3,7 +3,6 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: rhbk-whitelist
-  namespace: rhbk
 spec:
   ipWhiteList:
     sourceRange:  
@@ -16,14 +15,13 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: rhbk-ingress-http
-  namespace: rhbk
   labels:
     app: rhbk
 spec:
   entryPoints:
     - web
   routes:
-    - match: Host(`rhbk.play-backend.vdbinfra.nl`)
+    - match: Host(`rhbk.{{ .Values.rhsso.cluster-name }}-backend.vdbinfra.nl`)
       kind: Rule
       services:
         - name: rhbk
@@ -37,14 +35,13 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: rhbk-ingress-https
-  namespace: rhbk
   labels:
     app: rhbk
 spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`rhbk.play-backend.vdbinfra.nl`)
+    - match: Host(`rhbk.{{ .Values.rhsso.cluster-name }}-backend.vdbinfra.nl`)
       kind: Rule
       services:
         - name: rhbk

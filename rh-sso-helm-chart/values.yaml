@@ -13,12 +13,8 @@ rhsso:
       url: jdbc:postgresql://rhbk-postgres.rhbk/vdb
       username: vdb
       password: vdb
-      # hostname: localhost
 
-    # spi-import-single-file-file: ./realm-to-import.json
-    # spi-import-single-file-realm-name: realm-name-other-than-master
-    # spi-import-single-file-strategy: OVERWRITE_EXISTING #IGNORE_EXISTING OR OVERWRITE_EXISTING
-
+  cluster-name: acce  
 pgsql:
   enabled: false  # Set to false to disable pgsql deployment
   image:
