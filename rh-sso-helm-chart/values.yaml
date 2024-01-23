@@ -5,30 +5,28 @@ rhsso:
 
   envs:
     admin:
-      user: kcadmin
+      user: rhbkadmin
       password: cW5ID3ul5e
 
     db: 
       type: postgres
-      url: jdbc:postgresql://pgsql/keycloak
-      username: keycloak
-      password: 64y7vYt7vh
+      url: jdbc:postgresql://rhbk-postgres.rhbk/vdb
+      username: vdb
+      password: vdb
       # hostname: localhost
 
     # spi-import-single-file-file: ./realm-to-import.json
     # spi-import-single-file-realm-name: realm-name-other-than-master
     # spi-import-single-file-strategy: OVERWRITE_EXISTING #IGNORE_EXISTING OR OVERWRITE_EXISTING
 
-
-# values.yaml
 pgsql:
-  enabled: true  # Set to false to disable pgsql deployment
+  enabled: false  # Set to false to disable pgsql deployment
   image:
     repository: postgres
     tag: latest
   database:
-    name: keycloak
+    name: vdb
     data: /var/lib/postgresql/data/pgdata
   user:
-    name: keycloak
-    password: 64y7vYt7vh
+    name: vdb
+    password: vdb

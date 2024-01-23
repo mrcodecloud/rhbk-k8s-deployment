@@ -14,7 +14,6 @@ spec:
     spec:
       containers:
         - name: rh-sso
-          # args: ["start-dev", "import-realm"]
           args: ["start-dev"]
           image: "{{ .Values.rhsso.image.repository }}:{{ .Values.rhsso.image.tag }}"
           env:
@@ -30,7 +29,10 @@ spec:
             - name: KC_DB_USERNAME
               value: "{{ .Values.rhsso.envs.db.username }}"
             - name: KC_DB_PASSWORD
-              value: "{{ .Values.rhsso.envs.db.password }}"
+              valueFrom:
+                secretKeyRef:
+                  name: rhbk-postgres-vdb-user
+                  key: password
           ports:
             - containerPort: 8080
           securityContext:
@@ -47,5 +49,5 @@ spec:
               port: 8080
             initialDelaySeconds: 30
             periodSeconds: 5
-            timeoutSeconds: 120  # Increase this value
+            timeoutSeconds: 120 
           

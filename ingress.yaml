@@ -3,7 +3,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: rhbk-whitelist
-  namespace: keycloak
+  namespace: rhbk
 spec:
   ipWhiteList:
     sourceRange:  
@@ -16,7 +16,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: rhbk-ingress-http
-  namespace: keycloak
+  namespace: rhbk
   labels:
     app: rhbk
 spec:
@@ -37,7 +37,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: rhbk-ingress-https
-  namespace: keycloak
+  namespace: rhbk
   labels:
     app: rhbk
 spec:
