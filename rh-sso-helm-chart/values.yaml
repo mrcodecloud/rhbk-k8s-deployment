@@ -14,7 +14,8 @@ rhsso:
       username: vdb
       password: vdb
 
-  clustername: acce  
+  clustername: acce
+  replicas: 3  
 pgsql:
   enabled: false  # Set to false to disable pgsql deployment
   image:
