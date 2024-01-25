@@ -55,6 +55,7 @@ spec:
         - name: rhbk
           kind: Service
           port: 8443
+          scheme: https
           serversTransport: rhbk-transport
       middlewares:
         - name: rhbk-whitelist
