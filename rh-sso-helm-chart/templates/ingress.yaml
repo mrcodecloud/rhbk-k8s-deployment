@@ -35,7 +35,6 @@ spec:
         - name: rhbk
           kind: Service
           port: 8443
-          serversTransport: rhbk-transport
       middlewares:
         - name: traefik-https-redirect@kubernetescrd
         - name: rhbk-whitelist
@@ -56,6 +55,7 @@ spec:
         - name: rhbk
           kind: Service
           port: 8443
+          serversTransport: rhbk-transport
       middlewares:
         - name: rhbk-whitelist
   tls:
