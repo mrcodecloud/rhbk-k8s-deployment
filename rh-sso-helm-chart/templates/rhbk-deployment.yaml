@@ -13,8 +13,8 @@ spec:
         app: {{ .Release.Name }}
     spec:
       volumes:
-        - name: tls-volume
-          secret:
+      - name: tls-volume
+        secret:
           secretName: le-prod-wildcard-cert 
       containers:
         - name: rh-sso
