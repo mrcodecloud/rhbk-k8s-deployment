@@ -12,16 +12,19 @@ spec:
       labels:
         app: {{ .Release.Name }}
     spec:
+      volumes:
+        - name: tls-volume
+          secret:
+          secretName: le-prod-wildcard-cert 
       containers:
         - name: rh-sso
-          args: ["start-dev"]
+          args: ["start"]
           image: "{{ .Values.rhsso.image.repository }}:{{ .Values.rhsso.image.tag }}"
           env:
             - name: KEYCLOAK_ADMIN
               value: "{{ .Values.rhsso.envs.admin.user }}"
             - name: KEYCLOAK_ADMIN_PASSWORD
               value: "{{ .Values.rhsso.envs.admin.password }}"
-
             - name: KC_DB
               value: "{{ .Values.rhsso.envs.db.type }}"
             - name: KC_DB_URL
@@ -33,8 +36,19 @@ spec:
                 secretKeyRef:
                   name: rhbk-postgres-vdb-user
                   key: password
+            - name: KC_HTTP_ENABLED
+              value: "false" 
+            - name: KC_HOSTNAME_URL
+              value: https://rhbk.acce-backend.vdbinfra.nl
+            - name: KC_HTTPS_CERTIFICATE_FILE 
+              value: "/etc/keycloak/tls/tls.crt"
+            - name: KC_HTTPS_CERTIFICATE_KEY_FILE
+              value: "/etc/keycloak/tls/tls.key"
           ports:
-            - containerPort: 8080
+            - containerPort: 8443
+          volumeMounts:
+          - name: tls-volume
+            mountPath: "/etc/keycloak/tls"
           securityContext:
             allowPrivilegeEscalation: false
             runAsNonRoot: true
@@ -46,7 +60,8 @@ spec:
           readinessProbe:
             httpGet:
               path: /realms/master
-              port: 8080
+              port: 8443
+              scheme: HTTPS
             initialDelaySeconds: 30
             periodSeconds: 5
             timeoutSeconds: 120 

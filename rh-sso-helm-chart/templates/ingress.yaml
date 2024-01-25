@@ -12,6 +12,14 @@ spec:
     - 62.45.206.57/32
 ---
 apiVersion: traefik.containo.us/v1alpha1
+kind: ServersTransport
+metadata:
+  name: rhbk-transport
+spec:
+  insecureSkipVerify: true
+  serverName: rhbk.{{ .Values.rhsso.clustername }}-backend.vdbinfra.nl
+---
+apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: rhbk-ingress-http
@@ -26,7 +34,8 @@ spec:
       services:
         - name: rhbk
           kind: Service
-          port: 80
+          port: 8443
+          serversTransport: rhbk-transport
       middlewares:
         - name: traefik-https-redirect@kubernetescrd
         - name: rhbk-whitelist
@@ -46,7 +55,7 @@ spec:
       services:
         - name: rhbk
           kind: Service
-          port: 80
+          port: 8443
       middlewares:
         - name: rhbk-whitelist
   tls:
