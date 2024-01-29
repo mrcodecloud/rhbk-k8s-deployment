@@ -10,7 +10,7 @@ rhsso:
 
     db: 
       type: postgres
-      url: jdbc:postgresql://rhbk-postgres.rhbk/vdb
+      url: jdbc:postgresql://rhbk-kc-restore-postgres/vdb
       username: vdb
       password: vdb
 
